@@ -24,9 +24,12 @@ class Input extends Component {
       alert("Please enter a url");
     } else {
       axios
-        .post("http://localhost:3000/github_discord_urls", {
-          url: this.state.inputVal,
-        })
+        .post(
+          "https://v2-github-discord-api-and-me.herokuapp.com/github_discord_urls",
+          {
+            url: this.state.inputVal,
+          }
+        )
         .then((res) => {
           this.setState({ github_url: res.data });
           console.log(res.data);
@@ -46,7 +49,12 @@ class Input extends Component {
           onChange={(event) => this.updateInputValue(event)}
           className="input"
         />
-        <input type="submit" value="Submit" className="btn btn-success" style={{margin:"10px"}}/>
+        <input
+          type="submit"
+          value="Submit"
+          className="btn btn-success"
+          style={{ margin: "10px" }}
+        />
         <br />
         <br />
         <p>The link to be pasted in github will appear below:</p>
