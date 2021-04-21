@@ -2,10 +2,11 @@
   text-align: center;
   margin: 30px;
 }
-
-.input {
-  width: 400px;
-  height: 30px;  
-  padding: 10px;
+.btn-in {
+  background-color: #fdf5f2;
+  border: 0.5px solid #ccc;
+  height: 34px;
 }
-
+.btn-in:hover {
+  background-color: #fcece9;
+}

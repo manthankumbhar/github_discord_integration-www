@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 
-class Input extends Component {
+class Home extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,7 +17,7 @@ class Input extends Component {
     event.preventDefault();
     this.setState({ inputVal: event.target.value });
   }
-
+  
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.inputVal === "") {
@@ -47,8 +47,9 @@ class Input extends Component {
           value={this.state.inputValue}
           placeholder="Please enter your discord webhook link.."
           onChange={(event) => this.updateInputValue(event)}
-          className="input"
+          className="col-sm-6 col-md-6"
         />
+        <br />
         <input
           type="submit"
           value="Submit"
@@ -64,4 +65,4 @@ class Input extends Component {
   }
 }
 
-export default Input;
+export default Home;
