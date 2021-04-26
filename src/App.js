@@ -20,8 +20,6 @@ class App extends Component {
   componentDidMount() {
     if (localStorage.accessTokenSecret) {
       this.setState({ userAuth: true });
-    } else {
-      return null;
     }
   }
 

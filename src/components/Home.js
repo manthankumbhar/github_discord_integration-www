@@ -17,7 +17,7 @@ class Home extends Component {
     event.preventDefault();
     this.setState({ inputVal: event.target.value });
   }
-  
+
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.inputVal === "") {

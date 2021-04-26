@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Component } from "react";
 import { Redirect } from "react-router-dom";
+import "./SignIn.css";
 
 class SignIn extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class SignIn extends Component {
           }
         })
         .catch((err) => {
-          alert(err);
+          alert(err.message);
         });
     }
   }
@@ -54,7 +55,7 @@ class SignIn extends Component {
         <h2>Sign in</h2>
         <br />
         <div className="form-group col-sm-6 col-md-6 col-lg-4 mx-auto">
-          <label htmlFor="exampleInputEmail1" style={{ fontSize: "12px" }}>
+          <label htmlFor="exampleInputEmail1" className="label">
             Email address
           </label>
           <input
@@ -62,13 +63,12 @@ class SignIn extends Component {
             onChange={this.handleChange}
             type="email"
             name="email"
-            className="form-control"
+            className="form-control input"
             placeholder="Enter your email address..."
-            style={{ height: "32px" }}
           />
         </div>
         <div className="form-group col-sm-6 col-md-6 col-lg-4 mx-auto">
-          <label htmlFor="exampleInputPassword1" style={{ fontSize: "12px" }}>
+          <label htmlFor="exampleInputPassword1" className="label">
             Password
           </label>
           <input
@@ -76,9 +76,8 @@ class SignIn extends Component {
             onChange={this.handleChange}
             type="password"
             name="password"
-            className="form-control"
+            className="form-control input"
             placeholder="Password"
-            style={{ height: "32px" }}
           />
           <br />
           <button

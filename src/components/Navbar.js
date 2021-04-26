@@ -3,6 +3,7 @@ import { Nav, Navbar, NavLink } from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import { Redirect } from "react-router";
+import "./Navbar.css";
 
 class NavBar extends Component {
   navbarBefore() {
@@ -14,18 +15,10 @@ class NavBar extends Component {
         />
         <NavbarCollapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <NavLink
-              href="/"
-              className=""
-              style={{ fontWeight: "800", margin: "0 10px" }}
-            >
+            <NavLink href="/" className="navlink">
               Sign in
             </NavLink>
-            <NavLink
-              href="/signup"
-              className=""
-              style={{ fontWeight: "800", margin: "0 10px" }}
-            >
+            <NavLink href="/signup" className="navlink">
               Sign up
             </NavLink>
           </Nav>
@@ -38,18 +31,13 @@ class NavBar extends Component {
     return (
       <Navbar bg="info" expand="md" className="shadow p-2 mb-4">
         <NavbarToggle
-          aria-controls="basic-navbar-nav"
           style={{ border: "none", padding: "0" }}
+          aria-controls="basic-navbar-nav"
         />
         <NavbarCollapse id="basic-navbar-nav">
-          <p style={{ margin: "7px" }}>Welcome {localStorage.userEmail}</p>
+          <p className="p">Welcome {localStorage.userEmail}</p>
           <Nav className="ml-auto">
-            <NavLink
-              href="/"
-              className=""
-              onClick={this.logout}
-              style={{ fontWeight: "800", margin: "0 10px" }}
-            >
+            <NavLink href="/" className="navlink" onClick={this.logout}>
               Logout
             </NavLink>
           </Nav>
