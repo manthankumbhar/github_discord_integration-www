@@ -37,14 +37,14 @@ class SignIn extends Component {
         })
         .then((res) => {
           if (res.status === 200) {
-            localStorage.setItem("accessTokenSecret", res.data["accessToken"]);
+            localStorage.setItem("accessTokenSecret", res.data["success"]);
             localStorage.setItem("userEmail", this.state.email);
             this.setState({ userAuthenticated: true });
             this.onChangeNavbar();
           }
         })
         .catch((err) => {
-          alert(err.message);
+          alert(err.response.data["error"]);
         });
     }
   }

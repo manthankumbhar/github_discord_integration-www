@@ -39,7 +39,7 @@ class App extends Component {
           userLogout={this.afterUserLogout}
         />
         <div className="App">
-          <h1 style={{ margin: "20px", fontWeight: "900" }}>
+          <h1 className="h1_app">
             Github, Discord, API calls & me
           </h1>
           <Switch>
@@ -49,7 +49,11 @@ class App extends Component {
               render={() => <SignIn navbarChange={this.onUserAuth} />}
             />
             <PrivateRoute path="/home" component={Home} />
-            <Route path="/signup" component={SignUp} />
+            <Route
+              exact
+              path="/signup"
+              render={() => <SignUp navbarChange={this.onUserAuth} />}
+            />
           </Switch>
         </div>
       </div>

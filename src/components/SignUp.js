@@ -20,6 +20,10 @@ class SignUp extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  onChangeNavbar() {
+    this.props.navbarChange();
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     if (this.state.inputVal === "") {
@@ -34,14 +38,15 @@ class SignUp extends Component {
           }
         )
         .then((res) => {
-          console.log(res.data);
           if (res.status === 200) {
-            alert("user added, please sign in now.");
+            localStorage.setItem("accessTokenSecret", res.data["success"]);
+            localStorage.setItem("userEmail", this.state.email);
             this.setState({ userRegistered: true });
+            this.onChangeNavbar();
           }
         })
-        .catch((err) => {
-          alert(err);
+        .catch((error) => {
+          alert(error.response.data["error"]);
         });
     }
   }
@@ -83,7 +88,8 @@ class SignUp extends Component {
           >
             Signup with email
           </button>
-          {this.state.userRegistered ? <Redirect to="/" /> : null}
+          {this.state.userRegistered ? <Redirect to="/home" /> : null}
+          {localStorage.accessTokenSecret ? <Redirect to="/home" /> : null}
         </div>
       </form>
     );
