@@ -1,13 +1,64 @@
+import { Component } from "react";
+import { Route, Switch } from "react-router";
 import "./App.css";
-import Input from "./Input";
+import Home from "./components/Home";
+import NavBar from "./components/Navbar";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import PrivateRoute from "./hoc/PrivateRoute";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Github, Discord, API calls & me v2.0</h1>
-      <Input />
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      userAuth: false,
+    };
+    this.onUserAuth = this.onUserAuth.bind(this);
+    this.afterUserLogout = this.afterUserLogout.bind(this);
+  }
+
+  componentDidMount() {
+    if (localStorage.accessTokenSecret) {
+      this.setState({ userAuth: true });
+    }
+  }
+
+  onUserAuth() {
+    this.setState({ userAuth: true });
+  }
+
+  afterUserLogout() {
+    this.setState({ userAuth: false });
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBar
+          isAuth={this.state.userAuth}
+          userLogout={this.afterUserLogout}
+        />
+        <div className="App">
+          <h1 className="h1_app">
+            Github, Discord, API calls & me
+          </h1>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <SignIn navbarChange={this.onUserAuth} />}
+            />
+            <PrivateRoute path="/home" component={Home} />
+            <Route
+              exact
+              path="/signup"
+              render={() => <SignUp navbarChange={this.onUserAuth} />}
+            />
+          </Switch>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
