@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { Spinner } from "react-bootstrap";
 
 class Home extends Component {
   constructor() {
@@ -8,6 +9,7 @@ class Home extends Component {
       inputVal: "",
       persons: [],
       github_url: "",
+      loading: false,
     };
     this.updateInputValue = this.updateInputValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,6 +25,7 @@ class Home extends Component {
     if (this.state.inputVal === "") {
       alert("Please enter a url");
     } else {
+      this.setState({ loading: true });
       axios
         .post(
           "https://v2-github-discord-api-and-me.herokuapp.com/github_discord_urls",
@@ -32,9 +35,10 @@ class Home extends Component {
         )
         .then((res) => {
           this.setState({ github_url: res.data });
-          console.log(res.data);
+          this.setState({ loading: false });
         })
         .catch((err) => {
+          this.setState({ loading: false });
           alert(err);
         });
     }
@@ -59,6 +63,7 @@ class Home extends Component {
         <br />
         <br />
         <p>The link to be pasted in github will appear below:</p>
+        {this.state.loading ? <Spinner animation="border" /> : null}
         <p>{this.state.github_url}</p>
       </form>
     );
