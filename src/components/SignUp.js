@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Component } from "react";
+import { Spinner } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./SignUp.css";
 
@@ -26,29 +27,25 @@ class SignUp extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.inputVal === "") {
-      alert("Please enter a url");
-    } else {
-      axios
-        .post(
-          "https://v2-github-discord-api-and-me.herokuapp.com/user_signup",
-          {
-            email: this.state.email,
-            password: this.state.password,
-          }
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            localStorage.setItem("accessTokenSecret", res.data["success"]);
-            localStorage.setItem("userEmail", this.state.email);
-            this.setState({ userRegistered: true });
-            this.onChangeNavbar();
-          }
-        })
-        .catch((error) => {
-          alert(error.response.data["error"]);
-        });
-    }
+    this.setState({ loading: true });
+    axios
+      .post("https://v2-github-discord-api-and-me.herokuapp.com/user_signup", {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem("accessTokenSecret", res.data["success"]);
+          localStorage.setItem("userEmail", this.state.email);
+          this.onChangeNavbar();
+          this.setState({ userRegistered: true });
+          this.setState({ loading: false });
+        }
+      })
+      .catch((error) => {
+        this.setState({ loading: false });
+        alert(error.response.data["error"]);
+      });
   }
 
   render() {
@@ -88,9 +85,10 @@ class SignUp extends Component {
           >
             Signup with email
           </button>
-          {this.state.userRegistered ? <Redirect to="/home" /> : null}
-          {localStorage.accessTokenSecret ? <Redirect to="/home" /> : null}
+          {this.state.loading ? <Spinner animation="border" /> : null}
         </div>
+        {this.state.userRegistered ? <Redirect to="/home" /> : null}
+        {localStorage.accessTokenSecret ? <Redirect to="/home" /> : null}
       </form>
     );
   }

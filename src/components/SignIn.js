@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Component } from "react";
+import { Spinner } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import "./SignIn.css";
 
@@ -11,6 +12,7 @@ class SignIn extends Component {
       email: "",
       password: "",
       userAuthenticated: false,
+      loading: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -27,26 +29,25 @@ class SignIn extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.inputVal === "") {
-      alert("Please enter a url");
-    } else {
-      axios
-        .post("https://v2-github-discord-api-and-me.herokuapp.com/user_auth", {
-          email: this.state.email,
-          password: this.state.password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            localStorage.setItem("accessTokenSecret", res.data["success"]);
-            localStorage.setItem("userEmail", this.state.email);
-            this.setState({ userAuthenticated: true });
-            this.onChangeNavbar();
-          }
-        })
-        .catch((err) => {
-          alert(err.response.data["error"]);
-        });
-    }
+    this.setState({ loading: true });
+    axios
+      .post("https://v2-github-discord-api-and-me.herokuapp.com/user_auth", {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem("accessTokenSecret", res.data["success"]);
+          localStorage.setItem("userEmail", this.state.email);
+          this.onChangeNavbar();
+          this.setState({ userAuthenticated: true });
+          this.setState({ loading: false });
+        }
+      })
+      .catch((err) => {
+        this.setState({ loading: false });
+        alert(err.response.data["error"]);
+      });
   }
 
   render() {
@@ -86,6 +87,7 @@ class SignIn extends Component {
           >
             Continue with email
           </button>
+          {this.state.loading ? <Spinner animation="border" /> : null}
         </div>
         {this.state.userAuthenticated ? <Redirect to="/home" /> : null}
         {localStorage.accessTokenSecret ? <Redirect to="/home" /> : null}
