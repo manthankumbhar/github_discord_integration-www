@@ -22,26 +22,22 @@ class Home extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.inputVal === "") {
-      alert("Please enter a url");
-    } else {
-      this.setState({ loading: true });
-      axios
-        .post(
-          "https://v2-github-discord-api-and-me.herokuapp.com/github_discord_urls",
-          {
-            url: this.state.inputVal,
-          }
-        )
-        .then((res) => {
-          this.setState({ github_url: res.data });
-          this.setState({ loading: false });
-        })
-        .catch((err) => {
-          this.setState({ loading: false });
-          alert(err);
-        });
-    }
+    this.setState({ loading: true });
+    axios
+      .post(
+        "https://v2-github-discord-api-and-me.herokuapp.com/github_discord_urls",
+        {
+          url: this.state.inputVal,
+        }
+      )
+      .then((res) => {
+        this.setState({ github_url: res.data });
+        this.setState({ loading: false });
+      })
+      .catch((err) => {
+        this.setState({ loading: false });
+        alert(err.response.data["error"]);
+      });
   }
   render() {
     return (

@@ -39,9 +39,7 @@ class App extends Component {
           userLogout={this.afterUserLogout}
         />
         <div className="App">
-          <h1 className="h1_app">
-            Github, Discord, API calls & me
-          </h1>
+          <h1 className="h1_app">Github, Discord, API calls & me</h1>
           <Switch>
             <Route
               exact
